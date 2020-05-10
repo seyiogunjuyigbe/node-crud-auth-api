@@ -4,8 +4,6 @@ const {PORT,SECRET} = require('./config/constants')
 const {startDb} = require('./database/db');
 const bodyParser = require('body-parser');
 const User = require('./models/user');
-const Teacher = require('./models/teacher');
-const Student = require('./models/student')
 const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
@@ -37,23 +35,10 @@ app.use(function (req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session())
 passport.use(User.createStrategy());
-// passport.use(Student.createStrategy());
-// passport.use(Teacher.createStrategy());
-
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.use("local", new LocalStrategy(User.authenticate()));
-
-// passport.use(Teacher.createStrategy());
-// passport.serializeUser(Teacher.serializeUser());
-// passport.deserializeUser(Teacher.deserializeUser());
-// passport.use("local-teacher", new LocalStrategy(Teacher.authenticate()));
-
-// passport.use(Student.createStrategy());
-// passport.serializeUser(Student.serializeUser());
-// passport.deserializeUser(Student.deserializeUser());
-// passport.use("local-student", new LocalStrategy(Student.authenticate()));
 
 initRoutes(app)
 var port = PORT || process.env.PORT || 3000
